@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Rincón de Pareja</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Variables de Diseño (Tema Romántico) --- */
+        :root {
+            --primary-color: #e84393;
+            --secondary-color: #fd79a8;
+            --background-color: #fdf6f8;
+            --card-background: #ffffff;
+            --text-color: #2d3436;
+            --text-light: #636e72;
+            --shadow-color: rgba(232, 67, 147, 0.15);
+            --font-heading: 'Dancing Script', cursive;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        /* --- Estilos Generales --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 20% 80%, var(--secondary-color) 0%, transparent 50%), radial-gradient(circle at 80% 20%, var(--primary-color) 0%, transparent 50%);
+            background-size: 200% 200%;
+            animation: backgroundShift 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* --- Navegación --- */
+        nav {
+            background-color: var(--card-background);
+            box-shadow: 0 4px 15px var(--shadow-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .nav-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            padding: 15px 0;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        .nav-logo[contenteditable="true"]:focus {
+            background-color: rgba(253, 121, 168, 0.1);
+            border-radius: 8px;
+            padding: 0 10px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 5px;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 20px 15px;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 700;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 8px;
+        }
+        
+        .nav-item a:hover, .nav-item a.active {
+            color: var(--card-background);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        }
+
+        /* --- Contenedor Principal y Secciones --- */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .content-section {
+            display: none; /* Todas las secciones ocultas por defecto */
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* --- Estilos Comunes para Formularios y Tarjetas --- */
+        .card {
+            background: var(--card-background);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px var(--shadow-color);
+            margin-bottom: 25px;
+            border: 1px solid rgba(253, 121, 168, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: var(--font-body);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(253, 121, 168, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px var(--shadow-color);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+        }
+
+        .item-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .item-card {
+            background: var(--card-background);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--primary-color);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px var(--shadow-color);
+        }
+        
+        .item-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .item-card p {
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .item-card .item-meta {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .delete-btn:hover {
+            color: #e74c3c;
+            transform: scale(1.2);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-light);
+        }
+        .empty-state-icon { font-size: 4rem; margin-bottom: 20px; }
+
+        /* --- Estilos Específicos de Sección --- */
+        #inicio h1 { font-family: var(--font-heading); font-size: 3rem; color: var(--primary-color); text-align: center; margin-bottom: 20px;}
+        #inicio .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center;}
+        #inicio .summary-card { padding: 20px; background: var(--card-background); border-radius: 15px; box-shadow: 0 5px 15px var(--shadow-color);}
+        #inicio .summary-card h2 { font-size: 2.5rem; color: var(--secondary-color);}
+        #inicio .summary-card p { color: var(--text-light);}
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; }
+            .nav-menu { width: 100%; justify-content: center; margin-top: 10px; }
+            .nav-item a { padding: 10px 15px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo" id="nav-title" contenteditable="true">Nuestro Rincón</div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#inicio" class="nav-link active" data-section="inicio">🏠 Inicio</a></li>
+                <li class="nav-item"><a href="#recuerdos" class="nav-link" data-section="recuerdos">💖 Recuerdos</a></li>
+                <li class="nav-item"><a href="#metas" class="nav-link" data-section="metas">🎯 Metas</a></li>
+                <li class="nav-item"><a href="#actividades" class="nav-link" data-section="actividades">🎉 Actividades</a></li>
+                <li class="nav-item"><a href="#sorpresa" class="nav-link" data-section="sorpresa">🎁 Sorpresa</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main>
+            <!-- SECCIÓN: INICIO -->
+            <section id="inicio" class="content-section active">
+                <h1>¡Bienvenidos a su Espacio!</h1>
+                <p style="text-align: center; color: var(--text-light); margin-bottom: 40px;">Aquí guardan la historia de su amor y construyen su futuro juntos.</p>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h2 id="memories-count">0</h2>
+                        <p>Recuerdos Guardados</p>
+                    </div>
+                    <div class="summary-card">
+                        <h2 id="goals-count">0</h2>
+                        <p>Metas en Pareja</p>
+                    </div>
+                    <div class="summary-card">
+                        <h2 id="activities-count">0</h2>
+                        <p>Ideas para Citas</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN: RECUERDOS -->
+            <section id="recuerdos" class="content-section">
+                <div class="card">
+                    <h2>Añadir un nuevo recuerdo 💕</h2>
+                    <form id="memory-form">
+                        <div class="form-group">
+                            <label for="memory-title-input">Título del Recuerdo</label>
+                            <input type="text" id="memory-title-input" placeholder="Ej: Nuestra primera cita" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="memory-date-input">Fecha</label>
+                            <input type="date" id="memory-date-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="memory-content-input">¿Qué pasó ese día?</label>
+                            <textarea id="memory-content-input" placeholder="Escribe aquí todos los detalles..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Guardar Recuerdo</button>
+                    </form>
+                </div>
+                <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary-color);">Nuestros Momentos</h2>
+                <div id="memories-list" class="item-list">
+                    <div class="empty-state"><div class="empty-state-icon">📖</div><p>Aún no hay recuerdos. ¡Comienza a escribir su historia!</p></div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN: METAS -->
+            <section id="metas" class="content-section">
+                <div class="card">
+                    <h2>Añadir una nueva meta 🎯</h2>
+                    <form id="goal-form">
+                        <div class="form-group">
+                            <label for="goal-title-input">¿Cuál es la meta?</label>
+                            <input type="text" id="goal-title-input" placeholder="Ej: Viajar a Japón" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="goal-date-input">Fecha para lograrla</label>
+                            <input type="date" id="goal-date-input" required>
+                        </div>
+                        <button type="submit" class="btn">Añadir Meta</button>
+                    </form>
+                </div>
+                <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary-color);">Nuestros Sueños</h2>
+                <div id="goals-list" class="item-list">
+                    <div class="empty-state"><div class="empty-state-icon">🚀</div><p>¡A soñar en grande! Añade su primera meta juntos.</p></div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN: ACTIVIDADES -->
+            <section id="actividades" class="content-section">
+                <div class="card">
+                    <h2>Añadir una idea para una cita 🎉</h2>
+                    <form id="activity-form">
+                        <div class="form-group">
+                            <label for="activity-title-input">Actividad</label>
+                            <input type="text" id="activity-title-input" placeholder="Ej: Picnic en el parque" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="activity-status-input">Estado</label>
+                            <select id="activity-status-input">
+                                <option value="idea">💡 Idea</option>
+                                <option value="planned">🗓️ Planeado</option>
+                                <option value="done">✅ ¡Hecho!</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn">Añadir Actividad</button>
+                    </form>
+                </div>
+                <h2 style="text-align: center; margin-bottom: 20px; color: var(--primary-color);">Nuestro Plan de Diversión</h2>
+                <div id="activities-list" class="item-list">
+                    <div class="empty-state"><div class="empty-state-icon">🎈</div><p>¡Nunca te aburras! Añade una idea para su próxima cita.</p></div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN: CAJA DE SORPRESAS -->
+            <section id="sorpresa" class="content-section">
+                <div class="card">
+                    <h2>Deja una sorpresa para tu pareja 🎁</h2>
+                    <form id="surprise-form">
+                        <div class="form-group">
+                            <label for="surprise-content-input">Escribe tu mensaje secreto...</label>
+                            <textarea id="surprise-content-input" placeholder="Un 'te amo', un recuerdo bonito, un motivo para sonreír..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Guardar Sorpresa</button>
+                    </form>
+                </div>
+                <div class="card" id="reveal-card" style="display:none;">
+                    <h2>¡Hay una sorpresa para ti! 💌</h2>
+                    <p style="margin-bottom: 20px;">Haz clic en el botón para descubrir tu mensaje.</p>
+                    <button id="reveal-btn" class="btn">Descubrir Mensaje</button>
+                    <div id="surprise-message" style="margin-top: 20px; padding: 20px; background: var(--background-color); border-radius: 10px; font-style: italic; display: none;"></div>
+                </div>
+                 <div id="no-surprise-state" class="empty-state">
+                    <div class="empty-state-icon">🤫</div>
+                    <p>No hay sorpresas guardadas por ahora... ¡Sé tú el primero en dejar una!</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- ELEMENTOS DEL DOM ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.content-section');
+            const navTitle = document.getElementById('nav-title');
+
+            // --- MANEJO DE NAVEGACIÓN ---
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetSectionId = link.dataset.section;
+
+                    // Quitar clase 'active' de todos los links y secciones
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    sections.forEach(s => s.classList.remove('active'));
+
+                    // Añadir clase 'active' al link y sección correspondientes
+                    link.classList.add('active');
+                    document.getElementById(targetSectionId).classList.add('active');
+                });
+            });
+
+            // --- GUARDADO EN LOCALSTORAGE ---
+            const saveData = (key, data) => localStorage.setItem(`diarioPareja_${key}`, JSON.stringify(data));
+            const loadData = (key) => JSON.parse(localStorage.getItem(`diarioPareja_${key}`)) || [];
+            
+            // TÍTULO EDITABLE
+            const savedTitle = localStorage.getItem('diarioPareja_title');
+            if (savedTitle) navTitle.textContent = savedTitle;
+            navTitle.addEventListener('input', () => localStorage.setItem('diarioPareja_title', navTitle.textContent));
+
+            // --- FUNCIÓN GENÉRICA PARA RENDERIZAR LISTAS ---
+            const renderList = (listId, items, itemTemplate, emptyMessage) => {
+                const listElement = document.getElementById(listId);
+                if (items.length === 0) {
+                    listElement.innerHTML = `<div class="empty-state"><div class="empty-state-icon">${emptyMessage.icon}</div><p>${emptyMessage.text}</p></div>`;
+                    return;
+                }
+                listElement.innerHTML = items.map(itemTemplate).join('');
+            };
+            
+            // --- FUNCIÓN PARA ACTUALIZAR CONTADORES DEL INICIO ---
+            const updateCounters = () => {
+                document.getElementById('memories-count').textContent = memories.length;
+                document.getElementById('goals-count').textContent = goals.length;
+                document.getElementById('activities-count').textContent = activities.length;
+            };
+
+            // --- LÓGICA DE RECUERDOS ---
+            let memories = loadData('memories');
+            const memoryForm = document.getElementById('memory-form');
+
+            const renderMemories = () => {
+                memories.sort((a, b) => new Date(b.date) - new Date(a.date));
+                renderList('memories-list', memories, (memory) => `
+                    <div class="item-card" data-id="${memory.id}">
+                        <button class="delete-btn" data-type="memory" data-id="${memory.id}">🗑️</button>
+                        <h3>${memory.title}</h3>
+                        <p>${memory.content}</p>
+                        <span class="item-meta">📅 ${new Date(memory.date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    </div>
+                `, { icon: '📖', text: 'Aún no hay recuerdos. ¡Comienza a escribir su historia!' });
+                updateCounters();
+            };
+
+            memoryForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                memories.push({
+                    id: Date.now(),
+                    title: document.getElementById('memory-title-input').value,
+                    date: document.getElementById('memory-date-input').value,
+                    content: document.getElementById('memory-content-input').value
+                });
+                saveData('memories', memories);
+                renderMemories();
+                memoryForm.reset();
+            });
+
+            // --- LÓGICA DE METAS ---
+            let goals = loadData('goals');
+            const goalForm = document.getElementById('goal-form');
+
+            const renderGoals = () => {
+                goals.sort((a, b) => new Date(a.date) - new Date(b.date));
+                renderList('goals-list', goals, (goal) => `
+                    <div class="item-card" data-id="${goal.id}">
+                        <button class="delete-btn" data-type="goal" data-id="${goal.id}">🗑️</button>
+                        <h3>${goal.title}</h3>
+                        <span class="item-meta">🎯 Fecha límite: ${new Date(goal.date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    </div>
+                `, { icon: '🚀', text: '¡A soñar en grande! Añade su primera meta juntos.' });
+                updateCounters();
+            };
+
+            goalForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                goals.push({
+                    id: Date.now(),
+                    title: document.getElementById('goal-title-input').value,
+                    date: document.getElementById('goal-date-input').value
+                });
+                saveData('goals', goals);
+                renderGoals();
+                goalForm.reset();
+            });
+
+            // --- LÓGICA DE ACTIVIDADES ---
+            let activities = loadData('activities');
+            const activityForm = document.getElementById('activity-form');
+            const statusMap = { idea: '💡 Idea', planned: '🗓️ Planeado', done: '✅ ¡Hecho!' };
+
+            const renderActivities = () => {
+                renderList('activities-list', activities, (activity) => `
+                    <div class="item-card" data-id="${activity.id}">
+                        <button class="delete-btn" data-type="activity" data-id="${activity.id}">🗑️</button>
+                        <h3>${activity.title}</h3>
+                        <span class="item-meta">${statusMap[activity.status]}</span>
+                    </div>
+                `, { icon: '🎈', text: '¡Nunca te aburras! Añade una idea para su próxima cita.' });
+                updateCounters();
+            };
+
+            activityForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                activities.push({
+                    id: Date.now(),
+                    title: document.getElementById('activity-title-input').value,
+                    status: document.getElementById('activity-status-input').value
+                });
+                saveData('activities', activities);
+                renderActivities();
+                activityForm.reset();
+            });
+
+            // --- LÓGICA DE SORPRESA ---
+            const surpriseForm = document.getElementById('surprise-form');
+            const revealCard = document.getElementById('reveal-card');
+            const noSurpriseState = document.getElementById('no-surprise-state');
+            const revealBtn = document.getElementById('reveal-btn');
+            const surpriseMessageDiv = document.getElementById('surprise-message');
+            
+            const checkForSurprise = () => {
+                const surprise = localStorage.getItem('diarioPareja_surprise');
+                if (surprise) {
+                    revealCard.style.display = 'block';
+                    noSurpriseState.style.display = 'none';
+                    surpriseMessageDiv.style.display = 'none'; // Ocultar mensaje hasta que se revele
+                } else {
+                    revealCard.style.display = 'none';
+                    noSurpriseState.style.display = 'block';
+                }
+            };
+
+            surpriseForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const message = document.getElementById('surprise-content-input').value;
+                localStorage.setItem('diarioPareja_surprise', message);
+                surpriseForm.reset();
+                checkForSurprise();
+            });
+
+            revealBtn.addEventListener('click', () => {
+                const message = localStorage.getItem('diarioPareja_surprise');
+                if (message) {
+                    surpriseMessageDiv.textContent = message;
+                    surpriseMessageDiv.style.display = 'block';
+                    revealBtn.style.display = 'none'; // Ocultar botón después de revelar
+                    // Borrar la sorpresa después de ser vista
+                    setTimeout(() => {
+                        localStorage.removeItem('diarioPareja_surprise');
+                        checkForSurprise();
+                    }, 5000); // Dar tiempo para leerlo antes de que desaparezca
+                }
+            });
+
+            // --- LÓGICA DE BORRADO (DELEGACIÓN DE EVENTOS) ---
+            document.body.addEventListener('click', (e) => {
+                if (e.target.classList.contains('delete-btn')) {
+                    const type = e.target.dataset.type;
+                    const id = parseInt(e.target.dataset.id);
+                    if (confirm('¿Estás segura de que quieres borrar esto?')) {
+                        if (type === 'memory') {
+                            memories = memories.filter(m => m.id !== id);
+                            saveData('memories', memories);
+                            renderMemories();
+                        } else if (type === 'goal') {
+                            goals = goals.filter(g => g.id !== id);
+                            saveData('goals', goals);
+                            renderGoals();
+                        } else if (type === 'activity') {
+                            activities = activities.filter(a => a.id !== id);
+                            saveData('activities', activities);
+                            renderActivities();
+                        }
+                    }
+                }
+            });
+
+            // --- CARGA INICIAL ---
+            renderMemories();
+            renderGoals();
+            renderActivities();
+            checkForSurprise();
+            updateCounters();
+        });
+    </script>
+
+</body>
+</html>
